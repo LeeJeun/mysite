@@ -15,17 +15,12 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath }/board/write">
-					<c:choose>
-						<c:when test="${empty param.gNo }">
-							<input type = "hidden" name = "a" value="write">		
-						</c:when>
-						<c:otherwise>
-							<input type = "hidden" name = "a" value="replyInsert">
-							<input type = "hidden" name = "gNo" value="${param.gNo }">
-							<input type = "hidden" name = "oNo" value="${param.oNo }">
-							<input type = "hidden" name = "depth" value="${param.depth }">
-						</c:otherwise>
-					</c:choose>
+					<c:if test="${!empty param.gNo }">
+						<input type = "hidden" name = "a" value="replyInsert">
+						<input type = "hidden" name = "gNo" value="${param.gNo }">
+						<input type = "hidden" name = "oNo" value="${param.oNo }">
+						<input type = "hidden" name = "depth" value="${param.depth }">
+					</c:if>
 					<table class="tbl-ex">
 
 							<tr>

@@ -16,11 +16,10 @@
 		<div id="content">
 			<div id="board" class="board-form">
 				<table class="tbl-ex">
-					<c:forEach items="${vo }" var="vo" varStatus="status">
 					<c:set var = "no" value="${vo.no }"/>
 					<c:set var = "userNo" value="${vo.userNo }"/>
-					<c:set var = "groupNo" value="${vo.gNo }"/>
-					<c:set var = "orderNo" value="${vo.oNo }"/>
+					<c:set var = "gNo" value="${vo.gNo }"/>
+					<c:set var = "oNo" value="${vo.oNo }"/>
 					<c:set var = "depth" value="${vo.depth }"/>
 					<tr>
 						<th colspan="2">글보기</th>
@@ -37,15 +36,14 @@
 							</div>
 						</td>
 					</tr>
-					</c:forEach>
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.servletContext.contextPath }/board">글목록</a>
 					<c:if test="${!empty authUser.no }">
-						<a href="${pageContext.servletContext.contextPath }/board?a=writeform&gNo=${groupNo}&oNo=${orderNo}&depth=${depth}">답글쓰기</a>
+						<a href="${pageContext.servletContext.contextPath }/board/write/gNo=${gNo}/oNo=${oNo}/depth=${depth}">답글쓰기</a>
 					</c:if>
 					<c:if test="${authUser.no eq userNo }">
-						<a href="${pageContext.servletContext.contextPath }/board?a=modifyform&no=${no}">글수정</a>
+						<a href="${pageContext.servletContext.contextPath }/board/modify/${no}">글수정</a>
 					</c:if>
 				</div>
 			</div>

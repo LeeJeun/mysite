@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import kr.co.itcen.mysite.repository.BoardDao;
 import kr.co.itcen.mysite.vo.BoardVo;
-import kr.co.itcen.web.Paging;
 
 @Service
 public class BoardService {
@@ -39,8 +38,8 @@ public class BoardService {
 		boardDao.replyInsert(vo);
 	}
 	
-	public List<BoardVo> view(Long boardNo) {
-		return boardDao.getView(boardNo);
+	public BoardVo view(Long no) {
+		return boardDao.getView(no);
 	}
 	
 	public void update(BoardVo vo) {

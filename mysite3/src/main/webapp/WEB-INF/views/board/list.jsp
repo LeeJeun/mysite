@@ -33,10 +33,10 @@
 									<td>[${count - status.index }]</td>
 									<c:choose>
 										<c:when test="${0 lt vo.depth }">
-											<td style='padding-left:${50*vo.depth }px'><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/><a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no}">${vo.title }</a></td>
+											<td style='padding-left:${50*vo.depth }px'><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/><a href="${pageContext.servletContext.contextPath }/board/board/view/${vo.no}">${vo.title }</a></td>
 										</c:when>
 										<c:otherwise>
-											<td ><a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no }">${vo.title }</a></td>
+											<td ><a href="${pageContext.servletContext.contextPath }/board/view/${vo.no }">${vo.title }</a></td>
 										</c:otherwise>
 									</c:choose>
 									
@@ -47,7 +47,7 @@
 									
 									<c:choose>
 										<c:when test="${authUser.no eq vo.userNo }">
-											<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${vo.no}" class="del">삭제</a></td>
+											<td><a href="${pageContext.servletContext.contextPath }/board/delete/${vo.no}" class="del">삭제</a></td>
 										</c:when>
 										<c:otherwise>
 										</c:otherwise>

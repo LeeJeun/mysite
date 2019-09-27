@@ -1,12 +1,6 @@
 package kr.co.itcen.mysite.repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -57,9 +51,9 @@ public class BoardDao {
 		return count;
 	}
 
-	public List<BoardVo> getView(Long boardNo) {
-		sqlSession.update("board.hitUpdate", boardNo);
-		List<BoardVo> result = sqlSession.selectList("board.getView", boardNo);
+	public BoardVo getView(Long no) {
+		sqlSession.update("board.hitUpdate", no);
+		BoardVo result = sqlSession.selectOne("board.getView", no);
 		return result;
 	}
 	
