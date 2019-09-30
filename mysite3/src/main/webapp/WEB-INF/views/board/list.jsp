@@ -14,7 +14,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.servletContext.contextPath }/board?a=list" method="post">
+				<form id="search_form" action="${pageContext.servletContext.contextPath }/board" method="post">
 					<input type="text" id="kwd" name="kwd" value="">
 					<input type="submit" value="찾기">
 				</form>
@@ -51,21 +51,46 @@
 						</table>
 				<!-- pager 추가 -->
 				<div class="pager">
-					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
-					</ul>
-				</div>					
+				    <ul>
+				        <c:if test="${ paging.curPageNum > 5 && !empty kwd }">
+				            <li><a href="${pageContext.servletContext.contextPath }/board?page=${ paging.blockStartNum - 1 }&kwd=${ kwd }">◀</a></li>
+				        </c:if>
+				        
+				        <c:if test="${ paging.curPageNum > 5 }">
+				            <li><a href="${pageContext.servletContext.contextPath }/board?page=${ paging.blockStartNum - 1 }">◀</a></li>
+				        </c:if>
+				        
+				        <c:forEach var="i" begin="${ paging.blockStartNum }" end="${ paging.blockLastNum }">
+				            <c:choose>
+				                <c:when test="${ i > paging.lastPageNum }">
+				                    <li>${ i }</li>
+				                </c:when>
+				                <c:when test="${ i == paging.curPageNum }">
+				                    <li class="selected">${ i }</li>
+				                </c:when>
+				                <c:when test="${ !empty kwd}">
+				                    <li><a href="${pageContext.servletContext.contextPath }/board?page=${ i }&kwd=${ kwd }">${ i }</a></li>
+				                </c:when>
+				                <c:otherwise>
+				                    <li><a href="${pageContext.servletContext.contextPath }/board?page=${ i }">${ i }</a></li>
+				                </c:otherwise>
+				            </c:choose>
+				        </c:forEach>
+				        
+				        <c:if test="${ paging.lastPageNum > paging.blockLastNum && !empty kwd }">
+				            <li><a href="${pageContext.servletContext.contextPath }/board?page=${ paging.blockLastNum + 1 }&kwd=${ kwd }">▶</a></li>
+				        </c:if>
+				        
+				        <c:if test="${ paging.lastPageNum > paging.blockLastNum }">
+				            <li><a href="${pageContext.servletContext.contextPath }/board?page=${ paging.blockLastNum + 1 }">▶</a></li>
+				        </c:if>
+				    </ul>
+				</div> 					
 				<!-- pager 추가 -->
 				
 				<div class="bottom">
 					<c:if test="${!empty authUser.no }">
-						<a href="${pageContext.servletContext.contextPath }/board/write/${page }" id="new-book">글쓰기</a>
+						<a href="${pageContext.servletContext.contextPath }/board/write/${paging.curPageNum }" id="new-book">글쓰기</a>
 					</c:if>
 				</div>				
 			</div>

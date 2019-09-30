@@ -1,8 +1,7 @@
 package kr.co.itcen.web;
 
-import kr.co.itcen.mysite.repository.BoardDao;
-
 public class Paging {
+
     private final static int pageCount = 5;
     private int blockStartNum = 0;
     private int blockLastNum = 0;
@@ -50,11 +49,8 @@ public class Paging {
     }
 
     // 총 페이지의 마지막 번호
-    public void makeLastPageNum() {
-        BoardDao dao = new BoardDao();
-        int total = dao.getCount();
-      
-        if( total % pageCount == 0 ) {
+    public void makeLastPageNum(int total) {
+        if(total % pageCount == 0 ) {
             lastPageNum = (int)Math.floor(total/pageCount);
         }
         else {
@@ -63,10 +59,7 @@ public class Paging {
     }
 
     // 검색을 했을 때 총 페이지의 마지막 번호
-    public void makeLastPageNum(String kwd) {
-    	BoardDao dao = new BoardDao();
-        int total = dao.getCount(kwd);
-
+    public void makeLastPageNum(String kwd, int total) {
         if( total % pageCount == 0 ) {
             lastPageNum = (int)Math.floor(total/pageCount);
         }

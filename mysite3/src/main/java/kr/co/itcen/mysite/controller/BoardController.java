@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.itcen.mysite.service.BoardService;
 import kr.co.itcen.mysite.vo.BoardVo;
 import kr.co.itcen.mysite.vo.UserVo;
+import kr.co.itcen.web.Paging;
 
 @Controller
 @RequestMapping("/board")
@@ -23,19 +25,36 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 
-	@RequestMapping("")
-	public String list(Model model) {
-		List<BoardVo> vo = boardService.list();
-		model.addAttribute("list", vo);
+	@RequestMapping({"","list"})
+	public String list(@RequestParam(value="page", required=false, defaultValue="1") int page, 
+			@RequestParam(value="kwd", required=false, defaultValue="") String kwd, 
+			Model model) {
+		
+		// Paging
+		int curPageNum = page;	
+		
+		Paging paging = new Paging(curPageNum);
+	
+		if(kwd.isEmpty()) {
+			int count = boardService.getCount();
+			paging.makeBlock(curPageNum);
+			paging.makeLastPageNum(count);
+			model.addAttribute("paging", paging);
+						
+			List<BoardVo> vo = boardService.list(curPageNum);
+			model.addAttribute("list", vo);
+			model.addAttribute("paging", paging);
+		} else {
+			int count = boardService.getCount(kwd);
+			paging.makeBlock(curPageNum);
+			paging.makeLastPageNum(kwd, count);
+			model.addAttribute("paging", paging);
+						
+			List<BoardVo> vo = boardService.list(kwd, curPageNum);
+			model.addAttribute("list", vo);
+		}
 		return "board/list";
 	}
-
-//	@RequestMapping("/{page}")
-//	public String list(@PathVariable("page") int page, Model model) {
-//		List<BoardVo> vo = boardService.list();
-//		model.addAttribute("list", vo);
-//		return "board/list";
-//	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String write() {

@@ -1,7 +1,9 @@
 package kr.co.itcen.mysite.repository;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +33,17 @@ public class BoardDao {
 		return count == 1;
 	}
 	
-	public List<BoardVo> getList() {
-		List<BoardVo> result = sqlSession.selectList("board.getList");
+	public List<BoardVo> getList(int curPageNum) {
+		List<BoardVo> result = sqlSession.selectList("board.getList", (curPageNum-1)*5);
 		return result;
 	}
 	
-	public List<BoardVo> getList(String kwd) {
-		List<BoardVo> result = sqlSession.selectList("board.getSerchList", kwd);
+	public List<BoardVo> getList(String kwd, int curPageNum) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("kwd", kwd);
+		map.put("curPageNum", (curPageNum-1)*5);
+		
+		List<BoardVo> result = sqlSession.selectList("board.getSerchList", map);
 		return result;
 	}
 	

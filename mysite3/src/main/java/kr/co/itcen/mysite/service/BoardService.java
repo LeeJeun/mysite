@@ -15,19 +15,13 @@ public class BoardService {
 	private BoardDao boardDao;
 	
 	//일반
-	public List<BoardVo> list(){
-//		int curPageNum = 1;
-//		if (request.getParameter("page") != null) {
-//			curPageNum = Integer.parseInt(request.getParameter("page"));
-//		}
-//		Paging paging = new Paging(curPageNum);
-//		
-		return boardDao.getList();
+	public List<BoardVo> list(int curPageNum){
+		return boardDao.getList(curPageNum);
 	}
 	
 	//키워드용
-	public List<BoardVo> list(String kwd){
-		return boardDao.getList(kwd);
+	public List<BoardVo> list(String kwd, int curPageNum){
+		return boardDao.getList(kwd, curPageNum);
 	}
 	
 	public void insert(BoardVo vo) {

@@ -28,6 +28,11 @@ public class UserDao {
 		return sqlSession.selectOne("user.getByNo", no);
 	}
 	
+	public UserVo get(String email) {
+		UserVo result = sqlSession.selectOne("user.getByEmail", email);
+		return result;		
+	}
+	
 	public UserVo get(UserVo vo) {
 		UserVo result = sqlSession.selectOne("user.getByEmailAndPassword1", vo);
 		return result;

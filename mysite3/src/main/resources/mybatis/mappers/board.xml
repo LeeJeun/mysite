@@ -31,7 +31,7 @@
 		]]>
 	</update>
 	
-	<select id="getList" resultType="boardvo">
+	<select id="getList" parameterType="integer" resultType="boardvo">
 		<![CDATA[
 			select b.no as no, 
 			       b.title as title, 
@@ -45,10 +45,11 @@
 			  from board b, user u
 			 where b.user_no = u.no
 		  order by b.g_no desc, b.o_no asc
+		     limit #{curPageNum}, 5
 		]]>
 	</select>
 	
-	<select id="getSerchList" parameterType="string" resultType="boardvo">
+	<select id="getSerchList" parameterType="map" resultType="boardvo">
 		<![CDATA[
 			select b.no as no, 
 			       b.title as title, 
@@ -63,6 +64,7 @@
 			 where b.user_no = u.no
 			   and (b.title like CONCAT('%',#{kwd},'%') or b.contents like CONCAT('%',#{kwd},'%'))
 		  order by b.g_no desc, b.o_no asc
+		     limit #{curPageNum}, 5
 	  ]]>
 	</select>
 	
@@ -82,8 +84,8 @@
 		<![CDATA[
 			select count(*) 
 			  from board
-			 where b.title like CONCAT('%',#{kwd},'%') 
-			    or b.contents like CONCAT('%',#{kwd},'%')
+			 where title like CONCAT('%',#{kwd},'%') 
+			    or contents like CONCAT('%',#{kwd},'%')
 		]]>
 	</select>
 	
@@ -106,4 +108,5 @@
 			delete from board where no = #{no }
 		]]>
 	</delete>
+	
 </mapper>
