@@ -46,8 +46,12 @@ public class BoardService {
 		boardDao.update(vo);
 	}
 	
-	public void delete(BoardVo vo) {
-		boardDao.delete(vo);
+	public void delete(Long no) {
+		boardDao.delete(no);
+	}
+	
+	public void replyDelete(Long no) {
+		boardDao.replyDelete(no);
 	}
 	
 	public int getCount() {
@@ -56,5 +60,9 @@ public class BoardService {
 	
 	public int getCount(String kwd) {
 		return boardDao.getCount(kwd);
+	}
+	
+	public int getReplyCount(int gNo) {
+		return boardDao.getCount(gNo);
 	}
 }

@@ -50,6 +50,11 @@ public class BoardDao {
 		int count = sqlSession.selectOne("board.getSerchCount", kwd);
 		return count;
 	}
+	
+	public int getCount(int gNo) {
+		int count = sqlSession.selectOne("board.getReplyCount", gNo);
+		return count;
+	}
 
 	public BoardVo getView(Long no) {
 		sqlSession.update("board.hitUpdate", no);
@@ -57,7 +62,13 @@ public class BoardDao {
 		return result;
 	}
 	
-	public void delete(BoardVo vo) {
-		sqlSession.delete("board.delete", vo);	
+	public void delete(Long no) {
+		sqlSession.delete("board.delete", no);	
 	}
+	
+	public void replyDelete(Long no) {
+		sqlSession.delete("board.replyDelete", no);	
+	}
+	
+	
 }

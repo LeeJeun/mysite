@@ -10,6 +10,7 @@ public class BoardVo {
 	private int oNo;
 	private int depth;
 	private Long userNo;
+	private Long statusNo;
 	
 	// Join용
 	private String userName;
@@ -74,10 +75,18 @@ public class BoardVo {
 	public void setUserNo(Long userNo) {
 		this.userNo = userNo;
 	}
+	public Long getStatusNo() {
+		return statusNo;
+	}
+	public void setStatusNo(Long statusNo) {
+		this.statusNo = statusNo;
+	}
 	@Override
 	public String toString() {
 		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", hit=" + hit + ", regDate="
-				+ regDate + ", gNo=" + gNo + ", oNo=" + oNo + ", depth=" + depth + ", userNo=" + userNo + "]";
+				+ regDate + ", gNo=" + gNo + ", oNo=" + oNo + ", depth=" + depth + ", userNo=" + userNo + ", statusNo="
+				+ statusNo + ", userName=" + userName + "]";
 	}
+	
 	
 }

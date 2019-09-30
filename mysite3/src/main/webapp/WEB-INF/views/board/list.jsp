@@ -31,27 +31,21 @@
 							<c:forEach items="${list }" var="vo" varStatus="status">
 								<tr>
 									<td>[${count - status.index }]</td>
-									<c:choose>
-										<c:when test="${0 lt vo.depth }">
-											<td style='padding-left:${50*vo.depth }px'><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/><a href="${pageContext.servletContext.contextPath }/board/board/view/${vo.no}">${vo.title }</a></td>
-										</c:when>
-										<c:otherwise>
-											<td ><a href="${pageContext.servletContext.contextPath }/board/view/${vo.no }">${vo.title }</a></td>
-										</c:otherwise>
-									</c:choose>
-									
-									
+									<td style='padding-left:${15*vo.depth }px;text-align:left;'>
+										<c:if test="${vo.depth gt 0 }">
+											<img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/>
+										</c:if>
+										<c:if test="${vo.statusNo eq 2 }">
+											${vo.title }
+										</c:if>
+										<c:if test="${vo.statusNo eq 0 || vo.statusNo eq 1 }">
+											<a href="${pageContext.servletContext.contextPath }/board/view/${vo.no}">${vo.title }</a>
+										</c:if>
+									</td>
 									<td>${vo.userName }</td>
 									<td>${vo.hit }</td>
 									<td>${vo.regDate }</td>
-									
-									<c:choose>
-										<c:when test="${authUser.no eq vo.userNo }">
-											<td><a href="${pageContext.servletContext.contextPath }/board/delete/${vo.no}" class="del">삭제</a></td>
-										</c:when>
-										<c:otherwise>
-										</c:otherwise>
-									</c:choose>
+									<td><c:if test="${authUser.no eq vo.userNo }"><a href="${pageContext.servletContext.contextPath }/board/delete/${vo.no}/${vo.gNo}" class="del">삭제</a></c:if></td>
 								</tr>
 							</c:forEach>
 						</table>

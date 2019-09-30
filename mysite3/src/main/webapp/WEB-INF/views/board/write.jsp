@@ -15,11 +15,10 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath }/board/write">
-					<c:if test="${!empty param.gNo }">
-						<input type = "hidden" name = "a" value="replyInsert">
-						<input type = "hidden" name = "gNo" value="${param.gNo }">
-						<input type = "hidden" name = "oNo" value="${param.oNo }">
-						<input type = "hidden" name = "depth" value="${param.depth }">
+					<c:if test="${!empty vo.gNo }">
+						<input type = "hidden" name = "gNo" value="${vo.gNo }">
+						<input type = "hidden" name = "oNo" value="${vo.oNo }">
+						<input type = "hidden" name = "depth" value="${vo.depth }">
 					</c:if>
 					<table class="tbl-ex">
 

@@ -15,9 +15,15 @@
 	</update>
 	<insert id="replyInsert" parameterType="boardvo">
 		<![CDATA[
-			insert into board values(null, #{title }, #{contents }, 0, now(), #{gNo }, #{oNo+1 }, #{depth+1 }, #{userNo })
+			insert into board values(null, #{title}, #{contents}, 0, now(), #{gNo}, #{oNo}+1, #{depth}+1, #{userNo}, 0)
 		]]>
 	</insert>
+	
+	<delete id="replyDelete" parameterType="long">
+		<![CDATA[
+			update board set title = "삭제된 게시물 입니다.", status_no = 2 where no = #{no }
+		]]>
+	</delete>
 	
 	<update id="update" parameterType="boardvo">
 		<![CDATA[
@@ -32,8 +38,10 @@
 			       b.user_no as userNo, 
 			       u.name as userName, 
 			       b.hit as hit, 
+			       b.g_no as gNo,
 			       b.depth as depth, 
-			       date_format(b.reg_date, '%Y-%m-%d %h:%i:%s') as regDate
+			       date_format(b.reg_date, '%Y-%m-%d %h:%i:%s') as regDate,
+			       b.status_no as statusNo
 			  from board b, user u
 			 where b.user_no = u.no
 		  order by b.g_no desc, b.o_no asc
@@ -47,8 +55,10 @@
 			       b.user_no as userNo, 
 			       u.name as userName, 
 			       b.hit as hit, 
+			       b.g_no as gNo,
 			       b.depth as depth, 
-			       date_format(b.reg_date, '%Y-%m-%d %h:%i:%s') as regDate
+			       date_format(b.reg_date, '%Y-%m-%d %h:%i:%s') as regDate,
+			       b.status_no as statusNo
 			  from board b, user u
 			 where b.user_no = u.no
 			   and (b.title like CONCAT('%',#{kwd},'%') or b.contents like CONCAT('%',#{kwd},'%'))
@@ -59,6 +69,12 @@
 	<select id="getCount" resultType="integer">
 		<![CDATA[
 			select count(*) from board
+		]]>
+	</select>
+	
+	<select id="getReplyCount" parameterType="integer" resultType="integer">
+		<![CDATA[
+			select count(*) from board where g_no = #{gNo }
 		]]>
 	</select>
 	
@@ -85,7 +101,7 @@
 		]]>
 	</select>
 	
-	<delete id="delete" parameterType="boardvo">
+	<delete id="delete" parameterType="long">
 		<![CDATA[
 			delete from board where no = #{no }
 		]]>

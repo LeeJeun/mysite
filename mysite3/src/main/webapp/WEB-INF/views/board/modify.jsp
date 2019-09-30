@@ -14,11 +14,8 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath }/board">
-					<input type = "hidden" name = "a" value="modify">
+				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath }/board/modify/${vo.no}">
 					<table class="tbl-ex">
-					<c:forEach items="${vo }" var="vo" varStatus="status">
-					<input type = "hidden" name = "no" value="${vo.no }">
 						<tr>
 							<th colspan="2">글수정</th>
 						</tr>
@@ -29,10 +26,9 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content">${vo.contents }</textarea>
+								<textarea id="content" name="contents">${vo.contents }</textarea>
 							</td>
 						</tr>
-						</c:forEach>
 					</table>
 					<div class="bottom">
 						<a href="${pageContext.servletContext.contextPath }/board">취소</a>
