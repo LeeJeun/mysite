@@ -11,12 +11,14 @@ import kr.co.itcen.mysite.vo.UserVo;
 
 @Repository
 public class UserDao {
+	
 	@Autowired
 	private SqlSession sqlSession;
 	
 	public Boolean insert(UserVo vo) throws UserDaoException{
 		int count = sqlSession.insert("user.insert", vo);
-		return count == 1;		
+		System.out.println(vo);	
+		return count == 1;	
 	}
 	
 	public Boolean update(UserVo vo) {

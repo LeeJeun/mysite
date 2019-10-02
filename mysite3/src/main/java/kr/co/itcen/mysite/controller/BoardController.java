@@ -52,64 +52,67 @@ public class BoardController {
 						
 			List<BoardVo> vo = boardService.list(kwd, curPageNum);
 			model.addAttribute("list", vo);
+			model.addAttribute("kwd", kwd);
 		}
 		return "board/list";
 	}
 
-	@RequestMapping(value = "/write", method = RequestMethod.GET)
-	public String write() {
+	//새글
+	@RequestMapping(value = "/write/{page}", method = RequestMethod.GET)
+	public String write(@PathVariable("page") int page) {
 		return "board/write";
 	}
 
-	@RequestMapping(value = "/write/{no}", method = RequestMethod.GET)
-	public String write(@PathVariable("no") Long no, Model model) {
+	//답글
+	@RequestMapping(value = "/write/{no}/{page}", method = RequestMethod.GET)
+	public String write(@PathVariable("no") Long no, @PathVariable("page") int page, Model model) {
 		BoardVo vo = boardService.view(no);
 		model.addAttribute("vo",vo);
 		return "board/write";
 	}
 
-	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(@ModelAttribute BoardVo vo, HttpSession session) {
+	@RequestMapping(value = "/write/{page}", method = RequestMethod.POST)
+	public String write(@ModelAttribute BoardVo vo, HttpSession session, @PathVariable("page") int page) {
 		UserVo sessionVo = (UserVo) session.getAttribute("authUser");
 		Long userNo = sessionVo.getNo();
 		vo.setUserNo(userNo);
 		if (vo.getgNo() == 0) {
+			page = 1;
 			boardService.insert(vo);
 		} else {
 			boardService.replyInsert(vo);
 		}
-		return "redirect:/board"; 
+		return "redirect:/board?page="+page; 
 	}
 
-	@RequestMapping(value = "/view/{no}", method = RequestMethod.GET)
-	public String view(@PathVariable("no") Long no, Model model) {
+	@RequestMapping(value = "/view/{no}/{page}", method = RequestMethod.GET)
+	public String view(@PathVariable("no") Long no, @PathVariable("page") int page, Model model) {
 		BoardVo vo = boardService.view(no);
 		model.addAttribute("vo", vo);
-		System.out.println(vo);
 		return "board/view";
 	}
 	
-	@RequestMapping(value = "/delete/{no}/{gNo}", method = RequestMethod.GET)
-	public String delete(@PathVariable("no") Long no, @PathVariable("gNo") int gNo) {
+	@RequestMapping(value = "/delete/{no}/{gNo}/{page}", method = RequestMethod.GET)
+	public String delete(@PathVariable("no") Long no, @PathVariable("gNo") int gNo, @PathVariable("page") int page) {
 		int count = boardService.getReplyCount(gNo);
 		if(count>1) {
 			boardService.replyDelete(no);
 		} else {
 			boardService.delete(no);
 		}
-		return "redirect:/board";
+		return "redirect:/board?page="+page;
 	}
 	
-	@RequestMapping(value = "/modify/{no}", method = RequestMethod.GET)
-	public String modify(@PathVariable("no") Long no, Model model) {
+	@RequestMapping(value = "/modify/{no}/{page}", method = RequestMethod.GET)
+	public String modify(@PathVariable("no") Long no, @PathVariable("page") int page, Model model) {
 		BoardVo vo = boardService.view(no);
 		model.addAttribute("vo", vo);
 		return "board/modify";
 	}
 	
-	@RequestMapping(value = "/modify/{no}", method = RequestMethod.POST)
-	public String modify(@PathVariable("no") Long no, BoardVo vo) {
+	@RequestMapping(value = "/modify/{no}/{page}", method = RequestMethod.POST)
+	public String modify(@PathVariable("no") Long no, @PathVariable("page") int page, BoardVo vo) {
 		boardService.update(vo);
-		return "redirect:/board/view/"+no;
+		return "redirect:/board/view/"+no+"/"+page;
 	}
 }

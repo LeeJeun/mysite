@@ -27,17 +27,18 @@
 			<MaxFileSize>50KB</MaxFileSize>
 		</triggeringPolicy>
 	</appender>
+
+	<!--
+		kr.co.itcen.mysite.exception 아래 패키지 로그들만  
+		/log-mysite/exception.log 파일에만  출력하는 로거
+	-->
+	<logger name="kr.co.itcen.mysite.exception" level="debug" additivity="false">
+		<appender-ref ref="consoleAppender" />
+		<appender-ref ref="fileAppender1" />
+    </logger>
 	
-	
-		kr.co.itcen.logex2 아래 패키지 로그들만  /log-mysite/exception.log 파일에만  출력하는 로거
-	
-	<logger name="kr.co.itcen.exception"  level="debug" additivity="false">
-            <appender-ref ref="consoleAppender" />
-            <appender-ref ref="fileAppender1" />
-    </logger>   
-	
-	루트(글로벌) 로거
-	<root level="debug">
+	<!-- 루트(글로벌) 로거 -->
+	<root level="error">
 		<appender-ref ref="consoleAppender" />
 	</root>
 

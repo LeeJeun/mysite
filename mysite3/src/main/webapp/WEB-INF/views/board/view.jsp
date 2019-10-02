@@ -38,12 +38,12 @@
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="${pageContext.servletContext.contextPath }/board">글목록</a>
+					<a href="${pageContext.servletContext.contextPath }/board?page=${page}">글목록</a>
 					<c:if test="${!empty authUser.no }">
-						<a href="${pageContext.servletContext.contextPath }/board/write/${no}">답글쓰기</a>
+						<a href="${pageContext.servletContext.contextPath }/board/write/${no}/${page}">답글쓰기</a>
 					</c:if>
 					<c:if test="${authUser.no eq userNo }">
-						<a href="${pageContext.servletContext.contextPath }/board/modify/${no}">글수정</a>
+						<a href="${pageContext.servletContext.contextPath }/board/modify/${no}/${page}">글수정</a>
 					</c:if>
 				</div>
 			</div>

@@ -14,7 +14,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.servletContext.contextPath }/board" method="post">
+				<form id="search_form" action="board" method="post">
 					<input type="text" id="kwd" name="kwd" value="">
 					<input type="submit" value="찾기">
 				</form>
@@ -39,13 +39,13 @@
 											${vo.title }
 										</c:if>
 										<c:if test="${vo.statusNo eq 0 || vo.statusNo eq 1 }">
-											<a href="${pageContext.servletContext.contextPath }/board/view/${vo.no}">${vo.title }</a>
+											<a href="${pageContext.servletContext.contextPath }/board/view/${vo.no}/${paging.curPageNum}">${vo.title }</a>
 										</c:if>
 									</td>
 									<td>${vo.userName }</td>
 									<td>${vo.hit }</td>
 									<td>${vo.regDate }</td>
-									<td><c:if test="${authUser.no eq vo.userNo }"><a href="${pageContext.servletContext.contextPath }/board/delete/${vo.no}/${vo.gNo}" class="del">삭제</a></c:if></td>
+									<td><c:if test="${authUser.no eq vo.userNo }"><a href="${pageContext.servletContext.contextPath }/board/delete/${vo.no}/${vo.gNo}/${param.page}" class="del">삭제</a></c:if></td>
 								</tr>
 							</c:forEach>
 						</table>

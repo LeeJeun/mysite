@@ -14,7 +14,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath }/board/write">
+				<form class="board-form" method="post" action="${pageContext.servletContext.contextPath }/board/write/${page}">
 					<c:if test="${!empty vo.gNo }">
 						<input type = "hidden" name = "gNo" value="${vo.gNo }">
 						<input type = "hidden" name = "oNo" value="${vo.oNo }">
@@ -36,7 +36,7 @@
 
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.servletContext.contextPath }/board/${page }">취소</a>
+						<a href="${pageContext.servletContext.contextPath }/board?page=${page }">취소</a>
 						<input type="submit" value="등록">
 					</div>
 				</form>				
