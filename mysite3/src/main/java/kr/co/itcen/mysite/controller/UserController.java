@@ -1,20 +1,17 @@
 package kr.co.itcen.mysite.controller;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.co.itcen.mysite.security.Auth;
+import kr.co.itcen.mysite.security.AuthUser;
 import kr.co.itcen.mysite.service.UserService;
 import kr.co.itcen.mysite.vo.UserVo;
 
@@ -74,19 +71,36 @@ public class UserController {
 //		session.invalidate();
 //		return "redirect:/";
 //	}
-	
-	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(HttpSession session, Model model) {
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		UserVo userVo = userService.getUser(authUser.getNo());
 
-		model.addAttribute("vo",userVo);
-		
+//	@RequestMapping(value="/update", method=RequestMethod.GET)
+//	public String update(HttpSession session, Model model) {
+//		UserVo authUser = (UserVo) session.getAttribute("authUser");
+//		UserVo userVo = userService.getUser(authUser.getNo());
+//
+//		model.addAttribute("vo",userVo);
+//		
+//		return "user/update";
+//	}
+//	
+//	@RequestMapping(value="/update", method=RequestMethod.POST)
+//	public String update(@ModelAttribute UserVo vo, Model model) {
+//		userService.update(vo);
+//		return "redirect:/";
+//	}
+	
+	@Auth("USER")
+	//ADMIN -> Auth class에 enum{}
+	//role=Auth.Role.ADMIN ->Auth class에 role
+	//role=Role.ADMIN -> enum class
+	@RequestMapping(value="/update", method=RequestMethod.GET)
+	public String update(@AuthUser UserVo authUser, Model model) {
+		authUser = userService.getUser(authUser.getNo());
+		model.addAttribute("authUser", authUser);
 		return "user/update";
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(@ModelAttribute UserVo vo, Model model) {
+	public String update(@ModelAttribute @Valid UserVo vo) {
 		userService.update(vo);
 		return "redirect:/";
 	}
